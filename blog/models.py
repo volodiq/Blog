@@ -5,6 +5,9 @@ from django.db import models
 class Post(models.Model):
     """ Посты блога """
 
+    class Meta:
+        indexes = [models.Index(fields=['category', '-published_at'])]
+
     class Status(models.TextChoices):
         """ Статус поста """
         DRAFT = 'DR', 'Черновик'
