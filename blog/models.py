@@ -2,6 +2,14 @@ from django.utils import timezone
 from django.db import models
 
 
+class PublishedManager(models.Manager):
+    """ Модельный менеджер для опубликованных постов """
+
+    def get_queryset(self):
+        """ Получение постов со статусом опубликовано """
+        return super().get_queryset().filter(status=Post.Status.PUBLISHED)
+
+
 class Post(models.Model):
     """ Посты блога """
 
@@ -12,6 +20,10 @@ class Post(models.Model):
         """ Статус поста """
         DRAFT = 'DR', 'Черновик'
         PUBLISHED = 'PB', 'Опубликовано'
+
+    # Модельные менеджеры
+    objects = models.Manager()
+    published = PublishedManager()
 
     text = models.TextField('Содержание поста')
     title = models.CharField('Заголовок поста', max_length=200)
