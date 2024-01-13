@@ -53,3 +53,15 @@ class PostDetailsView(FormMixin, DetailView):
     def form_valid(self, form):
         form.save()
         return super(PostDetailsView, self).form_valid(form)
+
+
+class SearchListView(ListView):
+    """ Список постов по поиску """
+    template_name = 'post_list.html'
+    model = Post
+    context_object_name = 'posts'
+    paginate_by = 3
+
+    def get_queryset(self, *args):
+        query = self.request.GET.get('query')
+        return Post.objects.filter(title__icontains=query)
