@@ -15,6 +15,7 @@ class Post(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=['category', '-published_at'])]
+        ordering = ('-published_at',)
         verbose_name_plural = 'Посты'
 
     class Status(models.TextChoices):
@@ -40,6 +41,7 @@ class Post(models.Model):
 
 class Category(models.Model):
     """ Категории постов """
+
     class Meta:
         verbose_name_plural = 'Категории'
 
@@ -48,3 +50,20 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    """ Комментарии поста """
+
+    class Meta:
+        indexes = [models.Index(fields=['published_at'])]
+        ordering = ['-published_at']
+        verbose_name = 'Комментарии'
+
+    text = models.TextField()
+    author = models.CharField(max_length=30)
+    published_at = models.DateTimeField(default=timezone.now)
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comment')
+
+    def __str__(self):
+        return f'{self.author} | {self.post}'
