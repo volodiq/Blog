@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block styles %}
-
     {% endblock styles %}
 </head>
 <body>
@@ -30,13 +29,42 @@
 
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                         {% for category in categories %}
-                      <li><a class="dropdown-item" href="{% url 'blog:post_cat' category.slug %}">{{ category.name }}</a></li>
+                            <li><a class="dropdown-item"
+                                   href="{% url 'blog:post_cat' category.slug %}">{{ category.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
-                <li><a href="#" class="nav-link px-2 text-white">RSS Подписка</a></li>
+                <!-- Button trigger modal -->
+                <li>
+                    <button type="button" class="nav-link px-2 text-white" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                        RSS Подписка
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade text-black" id="exampleModal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Подключение RSS подписки</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Для подключения RSS подписки скопируйте: <a href="{% url 'blog:post_feed' %}">эту
+                                    ссылку</a>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
-
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control form-control-dark"
@@ -45,6 +73,7 @@
         </div>
     </div>
 </header>
+
 
 {% block content %}
 {% endblock content %}

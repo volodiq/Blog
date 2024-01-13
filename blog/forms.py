@@ -4,6 +4,7 @@ from .models import Comment
 
 
 class CommentForm(ModelForm):
+    """ Форма создания комментария для поста """
     class Meta:
         model = Comment
         fields = ('author', 'text',)
