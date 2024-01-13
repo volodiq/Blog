@@ -15,6 +15,7 @@ class Post(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=['category', '-published_at'])]
+        verbose_name_plural = 'Посты'
 
     class Status(models.TextChoices):
         """ Статус поста """
@@ -33,8 +34,17 @@ class Post(models.Model):
     category = models.ForeignKey('blog.Category', on_delete=models.CASCADE, related_name='category')
     status = models.CharField('Статус поста', max_length=2, choices=Status.choices, default=Status.DRAFT)
 
+    def __str__(self):
+        return self.title
+
 
 class Category(models.Model):
     """ Категории постов """
+    class Meta:
+        verbose_name_plural = 'Категории'
+
     name = models.CharField('Название категории постов', max_length=200)
     slug = models.SlugField('Slug категории постов', max_length=200, unique=True)
+
+    def __str__(self):
+        return self.name
